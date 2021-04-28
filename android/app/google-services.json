@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "65311251824",
+    "project_id": "pyde-ce2f7",
+    "storage_bucket": "pyde-ce2f7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:65311251824:android:d16fa1f0877aba452603b5",
+        "android_client_info": {
+          "package_name": "stephentorku.pyde"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "65311251824-nlh5jpnsd2q0i736qshcm8d9cgno7rsr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCX8BYwdTDWLl3eYXSzuuXq8NSBQQeOYxI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "65311251824-nlh5jpnsd2q0i736qshcm8d9cgno7rsr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
