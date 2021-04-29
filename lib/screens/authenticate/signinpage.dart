@@ -18,6 +18,12 @@ class _SignInPage extends State<SignInPage> {
   String email = '';
   String password = '';
   String rerror = '';
+  final snackBarSuccess = SnackBar(
+    content: Text('Login Successful!'),
+  );
+  final snackBarFail = SnackBar(
+    content: Text('Login Failed!'),
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -150,11 +156,15 @@ class _SignInPage extends State<SignInPage> {
                             _auth.signInWithEmailAndPassword(email, password);
                         print(result);
                         if (result == null) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(snackBarFail);
                           setState(() {
                             rerror = "Could not sign In with those credentials";
                             loading = false;
                           });
                         } else {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(snackBarSuccess);
                           return Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(

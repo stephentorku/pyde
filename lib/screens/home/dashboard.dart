@@ -7,6 +7,7 @@ import 'package:pyde/services/database.dart';
 import 'package:pyde/shared/drawer.dart';
 import 'package:pyde/services/auth.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:clipboard/clipboard.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -15,6 +16,12 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   final AuthService _auth = AuthService();
+  final snackBarLogOut = SnackBar(
+    content: Text('Logged Out'),
+  );
+  final snackBarDelete = SnackBar(
+    content: Text('Cause Deleted!'),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +41,7 @@ class _DashboardState extends State<Dashboard> {
               new FlatButton(
                 child: new Text("Yes"),
                 onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(snackBarDelete);
                   DetailsService(searchID: user.uid).deleteCause();
                   Navigator.of(context).pop();
                 },
@@ -70,6 +78,9 @@ class _DashboardState extends State<Dashboard> {
             double percentagestring =
                 (userData.currentAmount / userData.target) * 100;
             double percentage = (userData.currentAmount / userData.target);
+            String displayPercentage = percentagestring.toString() + '   ';
+            print(percentage);
+            print(percentagestring);
             return Scaffold(
               backgroundColor: Color(0xff21254A),
               appBar: AppBar(
@@ -88,6 +99,8 @@ class _DashboardState extends State<Dashboard> {
                       )),
                   FlatButton.icon(
                       onPressed: () async {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(snackBarLogOut);
                         await _auth.signOut();
                       },
                       icon: Icon(Icons.person, color: Colors.white),
@@ -101,7 +114,7 @@ class _DashboardState extends State<Dashboard> {
                 children: [
                   SizedBox(height: 30.0),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0.0, 0.0, 280.0, 0.0),
+                    padding: const EdgeInsets.fromLTRB(0.0, 0.0, 250.0, 0.0),
                     child: Text(
                       'Hello ' + userData.starter + ',',
                       style: TextStyle(color: Colors.white70, fontSize: 20.0),
@@ -149,11 +162,28 @@ class _DashboardState extends State<Dashboard> {
                                           style: TextStyle(
                                               color: Colors.white70,
                                               fontSize: 18.0)),
+                                      IconButton(
+                                          icon: Icon(Icons.copy,
+                                              color: Colors.white70),
+                                          onPressed: () {
+                                            FlutterClipboard.copy(
+                                                    userData.searchID)
+                                                .then((value) {
+                                              final snackBar = SnackBar(
+                                                content: Text(
+                                                    'SearchID copied to Clipboard'),
+                                              );
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(snackBar);
+
+                                              print('copied');
+                                            });
+                                          }),
                                     ],
                                   ),
                                 ),
                               ),
-                              height: 180.0,
+                              height: 190.0,
                             ),
                             // Expanded(...)
                           ],
@@ -173,9 +203,9 @@ class _DashboardState extends State<Dashboard> {
                     radius: 150.0,
                     lineWidth: 13.0,
                     animation: true,
-                    percent: percentage,
+                    percent: percentage >= 1.0 ? 1.0 : percentage,
                     center: new Text(
-                      percentagestring.toString() + "%",
+                      displayPercentage.substring(0, 5) + "%",
                       style: new TextStyle(
                           color: Colors.white70,
                           fontWeight: FontWeight.bold,
@@ -207,6 +237,7 @@ class _DashboardState extends State<Dashboard> {
           } else {
             return Scaffold(
               backgroundColor: Color(0xff21254A),
+              drawer: MyDrawer(),
               appBar: AppBar(
                 backgroundColor: Color(0xff21254A),
                 title: Text('Dashboard'),

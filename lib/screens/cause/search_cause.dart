@@ -10,6 +10,9 @@ class SearchCause extends StatefulWidget {
 class _SearchCauseState extends State<SearchCause> {
   final _formKey = GlobalKey<FormState>();
   String _searchID;
+  final snackBarFound = SnackBar(
+    content: Text('Searching For Cause'),
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,6 +78,8 @@ class _SearchCauseState extends State<SearchCause> {
                           child: InkWell(
                             onTap: () {
                               if (_formKey.currentState.validate()) {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBarFound);
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(

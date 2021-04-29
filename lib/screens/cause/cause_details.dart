@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pyde/models/user.dart';
+import 'package:pyde/screens/home/home.dart';
 import 'package:pyde/services/database.dart';
 import 'package:pyde/services/paystack_card.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -22,6 +23,7 @@ class CauseDetails extends StatelessWidget {
             double percentagestring =
                 (causeData.currentAmount / causeData.target) * 100;
             double percentage = (causeData.currentAmount / causeData.target);
+            String displayPercentage = percentagestring.toString() + '   ';
 
             return Scaffold(
               backgroundColor: Color(0xff21254A),
@@ -145,9 +147,9 @@ class CauseDetails extends StatelessWidget {
                       radius: 150.0,
                       lineWidth: 13.0,
                       animation: true,
-                      percent: percentage,
+                      percent: percentage >= 1.0 ? 1.0 : percentage,
                       center: new Text(
-                        percentagestring.toString() + "%",
+                        displayPercentage.substring(0, 5) + "%",
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -169,7 +171,26 @@ class CauseDetails extends StatelessWidget {
               ),
             );
           } else {
-            return Container();
+            return Scaffold(
+              body: Center(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 300.0,
+                    ),
+                    Text('Error, No Cause Found'),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) => Home()));
+                        },
+                        child: Text('Click here to return to home'))
+                  ],
+                ),
+              ),
+            );
           }
         });
   }

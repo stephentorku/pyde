@@ -4,6 +4,7 @@ import 'package:pyde/models/user.dart';
 import 'package:pyde/services/database.dart';
 import 'dart:math';
 import 'package:intl/intl.dart';
+import 'package:pyde/shared/flutter_button.dart';
 
 class AddCause extends StatefulWidget {
   @override
@@ -32,6 +33,9 @@ class _AddCauseState extends State<AddCause> {
   String _currentEmail;
   int _currentTarget;
 
+  final snackBarAdded = SnackBar(
+    content: Text('Cause Created!'),
+  );
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<Starter>(context);
@@ -137,22 +141,28 @@ class _AddCauseState extends State<AddCause> {
               onChanged: (val) => setState(() => _currentAccess = val),
             ),
             SizedBox(height: 20.0),
-            ElevatedButton(
-                onPressed: () async {
-                  if (_formKey.currentState.validate()) {
-                    await DatabaseService(uid: user.uid).createCause(
-                        _currentTitle,
-                        _currentName,
-                        _currentDescription,
-                        _currentEmail,
-                        _currentTarget,
-                        0,
-                        _currentAccess,
-                        currentDate);
-                    Navigator.pop(context);
-                  }
-                },
-                child: Text('Add'))
+            HoverButton(
+              title: "Add Cause",
+              titleColor: Colors.white,
+              spashColor: Colors.black,
+              tappedTitleColor: Colors.white,
+              borderColor: Colors.white,
+              onTap: () async {
+                if (_formKey.currentState.validate()) {
+                  await DatabaseService(uid: user.uid).createCause(
+                      _currentTitle,
+                      _currentName,
+                      _currentDescription,
+                      _currentEmail,
+                      _currentTarget,
+                      0,
+                      _currentAccess,
+                      currentDate);
+                  ScaffoldMessenger.of(context).showSnackBar(snackBarAdded);
+                  Navigator.pop(context);
+                }
+              },
+            ),
           ],
         ),
       ),

@@ -18,6 +18,10 @@ class _EditCauseState extends State<EditCause> {
   String _currentEmail;
   int _currentTarget;
   final _formKey2 = GlobalKey<FormState>();
+  final snackBarEdited = SnackBar(
+    content: Text('Cause Edited!'),
+  );
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<Starter>(context);
@@ -120,7 +124,8 @@ class _EditCauseState extends State<EditCause> {
                                     _currentTarget ?? userData.target,
                                     _currentEmail ?? userData.email,
                                     _currentAccess ?? userData.access);
-
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBarEdited);
                             Navigator.pop(context);
                           }
                         },
@@ -129,7 +134,7 @@ class _EditCauseState extends State<EditCause> {
                   )),
             );
           } else {
-            return Center(child: Text('Error'));
+            return Center(child: Text('Cannot Edit, Add a Cause'));
           }
         });
   }

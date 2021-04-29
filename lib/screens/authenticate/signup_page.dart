@@ -20,6 +20,13 @@ class _SignUpPage extends State<SignUpPage> {
   String password = '';
   String rerror = '';
 
+  final snackBarSuccess = SnackBar(
+    content: Text('Sign Up Successful!'),
+  );
+  final snackBarFail = SnackBar(
+    content: Text('Sign Up Failed!'),
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -149,11 +156,15 @@ class _SignUpPage extends State<SignUpPage> {
                             _auth.registerWithEmailAndPassword(email, password);
                         print(result);
                         if (result == null) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(snackBarFail);
                           setState(() {
                             rerror = "please supply a valid email";
                             loading = false;
                           });
                         } else {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(snackBarSuccess);
                           return Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
