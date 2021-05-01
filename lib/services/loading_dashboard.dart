@@ -14,7 +14,7 @@ class _LoadDashboardState extends State<LoadDashboard> {
     super.initState();
     // getTime();
     Timer(
-        Duration(seconds: 2),
+        Duration(seconds: 3),
         () => Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (BuildContext context) => Landing())));
   }
