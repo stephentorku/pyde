@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pyde/Animation/FadeAnimation.dart';
 import 'package:pyde/screens/home/dashboard.dart';
 import 'package:pyde/services/auth.dart';
+import 'package:pyde/services/loading.dart';
 
 class SignInPage extends StatefulWidget {
   final Function toggleView;
@@ -13,7 +14,7 @@ class SignInPage extends StatefulWidget {
 class _SignInPage extends State<SignInPage> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
-  bool loading;
+  bool loading = false;
   //text field state
   String email = '';
   String password = '';
@@ -151,17 +152,17 @@ class _SignInPage extends State<SignInPage> {
                     ),
                     onPressed: () async {
                       if (_formKey.currentState.validate()) {
-                        setState(() => loading = false);
-                        dynamic result =
-                            _auth.signInWithEmailAndPassword(email, password);
+                        setState(() => loading = true);
+                        dynamic result = await _auth.signInWithEmailAndPassword(
+                            email, password);
                         print(result);
                         if (result == null) {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(snackBarFail);
                           setState(() {
                             rerror = "Could not sign In with those credentials";
                             loading = false;
                           });
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(snackBarFail);
                         } else {
                           ScaffoldMessenger.of(context)
                               .showSnackBar(snackBarSuccess);

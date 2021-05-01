@@ -11,7 +11,7 @@ class _SearchCauseState extends State<SearchCause> {
   final _formKey = GlobalKey<FormState>();
   String _searchID;
   final snackBarFound = SnackBar(
-    content: Text('Searching For Cause'),
+    content: Text('Cause Found'),
   );
   @override
   Widget build(BuildContext context) {

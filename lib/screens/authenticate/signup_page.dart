@@ -152,8 +152,8 @@ class _SignUpPage extends State<SignUpPage> {
                     onPressed: () async {
                       if (_formKey.currentState.validate()) {
                         setState(() => loading = false);
-                        dynamic result =
-                            _auth.registerWithEmailAndPassword(email, password);
+                        dynamic result = await _auth
+                            .registerWithEmailAndPassword(email, password);
                         print(result);
                         if (result == null) {
                           ScaffoldMessenger.of(context)

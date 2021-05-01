@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:pyde/models/user.dart';
 import 'package:pyde/screens/home/home.dart';
 import 'package:pyde/services/database.dart';
+import 'package:pyde/services/loading.dart';
 import 'package:pyde/services/paystack_card.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:pyde/shared/flutter_button.dart';
@@ -17,6 +18,9 @@ class CauseDetails extends StatelessWidget {
         stream: DetailsService(searchID: searchID).causeData,
         // value: DatabaseService().causeData,
         builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Loading();
+          }
           if (snapshot.hasData) {
             CauseData causeData = snapshot.data;
 
