@@ -78,8 +78,6 @@ class _SearchCauseState extends State<SearchCause> {
                           child: InkWell(
                             onTap: () {
                               if (_formKey.currentState.validate()) {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackBarFound);
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(

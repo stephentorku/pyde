@@ -38,7 +38,7 @@ class _CheckoutMethodCardState extends State<CheckoutMethodCard> {
   sendMail(receiver, name, title) async {
     //TODO send mail if target has been reached
     String username = 'stephentorku22@gmail.com';
-    String password = 'Storku2000';
+    String password = 'Storku0506';
 
     //also use for gmail smtp
     final smtpServer = gmail(username, password);

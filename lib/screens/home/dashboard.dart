@@ -179,7 +179,8 @@ class _DashboardState extends State<Dashboard> {
                                           SizedBox(height: 5.0),
                                           Text(
                                               'SearchID: ' +
-                                                  userData.searchID +
+                                                  userData.searchID
+                                                      .substring(0, 25) +
                                                   '  ',
                                               style: TextStyle(
                                                   color: Colors.white70,
